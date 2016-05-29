@@ -8,7 +8,7 @@ chai.use(require('chai-spies'))
 chai.should()
 
 describe('ratsorat', () => {
-  it('compile should resolve single dependency', () => {
+  it('compiled function should resolve single dependency', () => {
     const modules = { a: 1, b: 2, c: 3 }
     const compiled = compile(modules, (runDependency, val, arg) => {
       return Promise.resolve(val * arg)
@@ -55,6 +55,46 @@ describe('ratsorat', () => {
 
     return compiled('a').catch(handleError).then(() => {
       handleError.should.have.been.called.once
+    })
+  })
+
+  it('resolveAll should resolve all dependencies', () => {
+    const modules = { a: 'a', b: 'b', c: 'c' }
+    const compiled = compile(modules, (runDependency, val, arg) => {
+      if (val === 'a')
+        return runDependency('b', arg).then(val => val + 3)
+      else if (val === 'b')
+        return 2 + arg
+      else
+        return 50
+    })
+
+    return resolveAll(compiled, 1).then(results => {
+      results.should.have.property('a', 6)
+      results.should.have.property('b', 3)
+      results.should.have.property('c', 50)
+    })
+  })
+
+  it('resolveAll should resolve all dependencies included dependency added during resolution', () => {
+    const modules = { a: 'a', b: 'b' }
+    const compiled = compile(modules, (runDependency, val, arg) => {
+      if (val === 'a') {
+        return 1 + arg
+      }
+      else if (val === 'b') {
+        modules.c = 'c'
+        return 2 + arg
+      }
+      else if (val === 'c') {
+        return 3 + arg
+      }
+    })
+
+    return resolveAll(compiled, 1).then(results => {
+      results.should.have.property('a', 2)
+      results.should.have.property('b', 3)
+      results.should.have.property('c', 4)
     })
   })
 })

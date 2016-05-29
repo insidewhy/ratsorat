@@ -1,6 +1,6 @@
 {
   "name": "ratsorat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Recursive dependency tracking with support for asynchronous functions and detection of cyclic dependencies.",
   "main": "index",
   "directories": {
