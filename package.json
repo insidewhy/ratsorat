@@ -1,7 +1,7 @@
 {
   "name": "ratsorat",
   "version": "0.1.0",
-  "description": "add dependency tracking to a recursively called function",
+  "description": "Recursive dependency tracking with support for asynchronous functions and detection of cyclic dependencies.",
   "main": "index",
   "directories": {
     "lib": "./lib"

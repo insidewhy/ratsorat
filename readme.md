@@ -2,17 +2,16 @@
 
 [![build status](https://circleci.com/gh/ohjames/ratsorat.png)](https://circleci.com/gh/ohjames/ratsorat)
 
-Used to provide recursive dependency tracking with support for asynchronous functions and error tracking.
-
+Recursive dependency tracking with support for asynchronous functions and detection of cyclic dependencies.
 
 ```javascript
 import {compile} from 'ratsorat'
 const modules = { a: 'a', b: 'b', c: 'c' }
 const compiled = compile(modules, (runDependency, val, arg) => {
   if (val === 'a')
-    return runDependency('b', arg).thenReturn(20 + arg)
+    return runDependency('b', arg).then(result => result + 10 + arg)
   else if (val === 'b')
-    return 30 + arg
+    return 30
   else
     throw Error('invalid call')
 })
@@ -20,8 +19,8 @@ const compiled = compile(modules, (runDependency, val, arg) => {
 compiled('a', 2)
 .then(result => {
   result.should.equal(22)
-  compiled.results.should.have.property('a', 22)
-  compiled.results.should.have.property('b', 32)
+  compiled.results.should.have.property('a', 42)
+  compiled.results.should.have.property('b', 30)
 })
 ```
 
@@ -37,9 +36,9 @@ The library also detects dependency cycles:
 const modules = { a: 'a', b: 'b' }
 const compiled = compile(modules, (runDependency, val) => {
   if (val === 'a')
-    return runDependency('b')
+    return runDependency('b').thenReturn(10)
   else if (val === 'b')
-    return runDependency('a')
+    return runDependency('a').thenReturn(20)
 })
 
 return compiled('a').catch(err => {
