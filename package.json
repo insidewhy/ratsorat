@@ -1,0 +1,45 @@
+{
+  "name": "ratsorat",
+  "version": "0.1.0",
+  "description": "add dependency tracking to a recursively called function",
+  "main": "index",
+  "directories": {
+    "lib": "./lib"
+  },
+  "scripts": {
+    "test": "sigh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ohjames/ratsorat.git"
+  },
+  "keywords": [
+    "build",
+    "assets",
+    "pipeline"
+  ],
+  "author": "James Pike <github@chilon.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ohjames/ratsorat/issues"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.0",
+    "lodash": "^4.13.1",
+    "sourcemap": "^0.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.8.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-loose": "^7.0.0",
+    "babel-preset-stage-1": "^6.5.0",
+    "chai": "^2.2.0",
+    "chai-spies": "^0.7.1",
+    "mocha": "^2.2.1",
+    "sigh": "^0.12.8",
+    "sigh-babel": "^0.12.0",
+    "sigh-cli": "^0.3.0",
+    "sigh-mocha": "^0.1.1"
+  }
+}
