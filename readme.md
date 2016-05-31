@@ -18,7 +18,7 @@ const compiled = compile(modules, (runDependency, val, arg) => {
 
 compiled('a', 2)
 .then(result => {
-  result.should.equal(22)
+  result.should.equal(42)
   compiled.results.should.have.property('a', 42)
   compiled.results.should.have.property('b', 30)
 })
